@@ -1,5 +1,6 @@
 // ===== Restaurant BJ — lógica de la web =====
 // No hace falta tocar este archivo. El menú se edita en data/menu.js
+// Compartido por index.html y carta.html (pinta solo las secciones que existan)
 
 let lang = "es";
 
@@ -8,16 +9,20 @@ function t(obj) {
   return obj[lang] || obj.es;
 }
 
+function setHTML(id, html) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = html;
+}
+
 function renderMenu() {
   const d = MENU_DATA;
 
-  // Fecha de actualización
-  document.getElementById("menu-updated").textContent =
-    (lang === "es" ? "Actualizado: " : "Updated: ") + d.updated;
+  const upd = document.getElementById("menu-updated");
+  if (upd) upd.textContent = (lang === "es" ? "Actualizado: " : "Updated: ") + d.updated;
 
   // Menú del día
   const m = d.menuDelDia;
-  document.getElementById("menu-del-dia").innerHTML = `
+  setHTML("menu-del-dia", `
     <div class="menu-block">
       <h3>${lang === "es" ? "Primeros" : "Starters"}</h3>
       <ul>${m.primeros.map(p => `<li>${t(p)}</li>`).join("")}</ul>
@@ -25,12 +30,12 @@ function renderMenu() {
       <ul>${m.segundos.map(p => `<li>${t(p)}</li>`).join("")}</ul>
       <p class="menu-price">${m.price}</p>
       <p class="menu-incluye">${t(m.incluye)}</p>
-    </div>`;
+    </div>`);
 
   // Bocadillo del día (semana completa, hoy resaltado)
   const b = d.bocadilloDelDia;
   const hoy = (new Date().getDay() + 6) % 7; // 0 = lunes
-  document.getElementById("bocadillo-del-dia").innerHTML = `
+  setHTML("bocadillo-del-dia", `
     <h3>${t(b.titulo)} — ${b.price}</h3>
     <ul class="semana">
       ${b.dias.map((x, i) => `
@@ -38,19 +43,19 @@ function renderMenu() {
           <span class="dia">${t(x.dia)}</span> ${t(x)}
           ${i === hoy ? `<span class="badge">${lang === "es" ? "HOY" : "TODAY"}</span>` : ""}
         </li>`).join("")}
-    </ul>`;
+    </ul>`);
 
   // Menús de oferta + desayunos
-  document.getElementById("ofertas").innerHTML = renderItems(d.ofertas);
-  document.getElementById("desayunos").innerHTML = renderItems(d.desayunos);
+  setHTML("ofertas", renderItems(d.ofertas));
+  setHTML("desayunos", renderItems(d.desayunos));
 
   // Carta fija
-  document.getElementById("carta-fija").innerHTML = d.carta.map(cat => `
+  setHTML("carta-fija", d.carta.map(cat => `
     <div class="carta-cat">
       <h3>${t(cat.categoria)}</h3>
       ${cat.nota ? `<p class="carta-nota">${t(cat.nota)}</p>` : ""}
       ${renderItems(cat.items)}
-    </div>`).join("");
+    </div>`).join(""));
 }
 
 function renderItems(items) {
@@ -63,12 +68,32 @@ function applyLang() {
   document.querySelectorAll("[data-es]").forEach(el => {
     el.textContent = el.dataset[lang];
   });
-  document.getElementById("lang-toggle").textContent = lang === "es" ? "EN" : "ES";
+  const lb = document.getElementById("lang-toggle");
+  if (lb) lb.textContent = lang === "es" ? "EN" : "ES";
   document.documentElement.lang = lang;
   renderMenu();
 }
 
-document.getElementById("lang-toggle").addEventListener("click", () => {
+// --- Tema claro / oscuro ---
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const tb = document.getElementById("theme-toggle");
+  if (tb) tb.textContent = theme === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("bj-theme", theme); } catch (e) {}
+}
+
+let theme = "light";
+try { theme = localStorage.getItem("bj-theme") || "light"; } catch (e) {}
+applyTheme(theme);
+
+const themeBtn = document.getElementById("theme-toggle");
+if (themeBtn) themeBtn.addEventListener("click", () => {
+  theme = theme === "dark" ? "light" : "dark";
+  applyTheme(theme);
+});
+
+const langBtn = document.getElementById("lang-toggle");
+if (langBtn) langBtn.addEventListener("click", () => {
   lang = lang === "es" ? "en" : "es";
   applyLang();
 });
