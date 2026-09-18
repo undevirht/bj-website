@@ -13,7 +13,7 @@ const MENU_DATA = {
 
   // ---------- MENÚ DEL DÍA (cambia cada día — editar aquí) ----------
   menuDelDia: {
-    price: "X,XX €", // PENDIENTE: precio real del menú del día
+    price: "12,50 €",
     incluye: { es: "Pan, bebida y postre o café incluidos", en: "Bread, drink and dessert or coffee included" },
     primeros: [
       { es: "Ejemplo: Lentejas caseras", en: "Example: Homemade lentil stew" },
@@ -28,7 +28,7 @@ const MENU_DATA = {
   // ---------- BOCADILLO DEL DÍA (oferta semanal fija) ----------
   bocadilloDelDia: {
     titulo: { es: "Bocadillo del día", en: "Sandwich of the day" },
-    price: "X,XX €", // PENDIENTE: precio de la oferta del día
+    price: "3,00 €",
     dias: [
       { dia: { es: "Lunes", en: "Monday" },       es: "Jamón o lomo",                    en: "Ham or pork loin" },
       { dia: { es: "Martes", en: "Tuesday" },     es: "Tortilla de patatas casera o fuet", en: "Homemade Spanish omelette or fuet" },
