@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant BJ — Menú del día en Vila Olímpica, Barcelona</title>
+  <meta name="description" content="Restaurant BJ: menú del día, bocadillos y café a buen precio junto a la UPF Ciutadella. Comida casera, rápida y honesta. Familia sirviendo al barrio.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== CABECERA ===== -->
+  <header class="hero">
+    <nav class="nav">
+      <span class="logo">Restaurant BJ</span>
+      <button id="lang-toggle" class="lang-btn" aria-label="Change language">EN</button>
+    </nav>
+    <div class="hero-content">
+      <!-- FOTO PENDIENTE: fachada o interior del bar -->
+      <h1 data-es="Comida casera, rápida y honesta" data-en="Honest, fast, homemade food">Comida casera, rápida y honesta</h1>
+      <p class="subtitle" data-es="A 2 minutos de la UPF Ciutadella · Vila Olímpica, Barcelona" data-en="2 minutes from UPF Ciutadella · Vila Olímpica, Barcelona">A 2 minutos de la UPF Ciutadella · Vila Olímpica, Barcelona</p>
+      <a href="#hoy" class="cta" data-es="Ver el menú de hoy" data-en="See today's menu">Ver el menú de hoy</a>
+    </div>
+  </header>
+
+  <!-- ===== MENÚ DE HOY (se rellena desde data/menu.js) ===== -->
+  <section id="hoy" class="section">
+    <h2 data-es="Menú de hoy" data-en="Today's menu">Menú de hoy</h2>
+    <p class="updated" id="menu-updated"></p>
+    <div id="menu-del-dia"></div>
+    <div id="bocadillo-del-dia" class="deal-box"></div>
+  </section>
+
+  <!-- ===== CARTA FIJA ===== -->
+  <section id="carta" class="section alt">
+    <h2 data-es="La carta" data-en="Our menu">La carta</h2>
+    <div id="carta-fija"></div>
+  </section>
+
+  <!-- ===== QUIÉNES SOMOS ===== -->
+  <section id="historia" class="section">
+    <h2 data-es="La casa" data-en="About us">La casa</h2>
+    <!-- FOTO PENDIENTE: familia detrás de la barra -->
+    <p data-es="Somos un negocio familiar sirviendo al barrio desde hace años. Sin pretensiones: buena comida, buen precio y caras conocidas."
+       data-en="We are a family business that has served this neighborhood for years. No frills: good food, fair prices, familiar faces.">
+      Somos un negocio familiar sirviendo al barrio desde hace años. Sin pretensiones: buena comida, buen precio y caras conocidas.
+    </p>
+  </section>
+
+  <!-- ===== CONTACTO ===== -->
+  <footer id="contacto" class="footer">
+    <h2 data-es="Dónde estamos" data-en="Find us">Dónde estamos</h2>
+    <div class="footer-grid">
+      <div>
+        <p><strong data-es="Horario" data-en="Hours">Horario</strong><br>
+        <span id="horario"><!-- PENDIENTE: horario real --> Lun–Vie · --:-- a --:--</span></p>
+        <p>
+          <!-- PENDIENTE: número real de WhatsApp (formato 34XXXXXXXXX) -->
+          <a class="whatsapp" href="https://wa.me/34XXXXXXXXX" data-es="Escríbenos por WhatsApp" data-en="Message us on WhatsApp">Escríbenos por WhatsApp</a>
+        </p>
+      </div>
+      <div class="map">
+        <iframe
+          src="https://www.google.com/maps?q=Restaurant+BJ,+Vila+Ol%C3%ADmpica,+Barcelona&output=embed"
+          loading="lazy" title="Mapa Restaurant BJ"></iframe>
+      </div>
+    </div>
+    <p class="fine" data-es="Restaurant BJ · Vila Olímpica, Barcelona" data-en="Restaurant BJ · Vila Olímpica, Barcelona">Restaurant BJ · Vila Olímpica, Barcelona</p>
+  </footer>
+
+  <script src="data/menu.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
