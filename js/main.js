@@ -45,17 +45,25 @@ function renderMenu() {
         </li>`).join("")}
     </ul>`);
 
-  // Menús de oferta + desayunos
-  setHTML("ofertas", renderItems(d.ofertas));
-  setHTML("desayunos", renderItems(d.desayunos));
+  // Menús de oferta + desayunos (desplegables)
+  setHTML("ofertas",
+    acordeon({ es: "Menús de bocadillo y burger", en: "Sandwich & burger menus" }, renderItems(d.ofertas)) +
+    acordeon({ es: "Desayunos", en: "Breakfast" }, renderItems(d.desayunos)));
 
-  // Carta fija
-  setHTML("carta-fija", d.carta.map(cat => `
-    <div class="carta-cat">
-      <h3>${t(cat.categoria)}</h3>
-      ${cat.nota ? `<p class="carta-nota">${t(cat.nota)}</p>` : ""}
-      ${renderItems(cat.items)}
-    </div>`).join(""));
+  // Carta fija (una sección desplegable por categoría)
+  setHTML("carta-fija", d.carta.map(cat => acordeon(
+    cat.categoria,
+    (cat.nota ? `<p class="carta-nota">${t(cat.nota)}</p>` : "") + renderItems(cat.items),
+    cat.items.length
+  )).join(""));
+}
+
+function acordeon(titulo, contenido, num) {
+  return `
+    <details class="acordeon">
+      <summary>${t(titulo)}${num ? ` <span class="num">${num}</span>` : ""}</summary>
+      <div class="acordeon-body">${contenido}</div>
+    </details>`;
 }
 
 function renderItems(items) {
