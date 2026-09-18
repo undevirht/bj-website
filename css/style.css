@@ -1,42 +1,64 @@
 /* ===== Restaurant BJ ===== */
+/* Tema claro (por defecto) y oscuro via [data-theme="dark"] */
 :root {
-  --crema: #faf6ef;
-  --tinta: #2b2620;
-  --rojo: #b3402a;   /* color principal — ajustable cuando haya fotos */
+  --bg: #faf6ef;
+  --text: #2b2620;
+  --alt: #f1ebe0;
+  --hero-bg: #2b2620;
+  --hero-text: #faf6ef;
+  --hero-sub: #cfc8bc;
+  --rojo: #b3402a;
   --verde: #4a5d3a;
   --gris: #6b6459;
+  --linea: #d8d0c2;
+}
+[data-theme="dark"] {
+  --bg: #1d1913;
+  --text: #f0e9dc;
+  --alt: #26211a;
+  --hero-bg: #121009;
+  --hero-text: #f0e9dc;
+  --hero-sub: #a89f8f;
+  --rojo: #d95b41;
+  --verde: #7a9662;
+  --gris: #a39a8b;
+  --linea: #463f35;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: Georgia, 'Times New Roman', serif;
-  color: var(--tinta);
-  background: var(--crema);
+  color: var(--text);
+  background: var(--bg);
   line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* --- Cabecera --- */
 .hero {
-  background: var(--tinta);
-  color: var(--crema);
+  background: var(--hero-bg);
+  color: var(--hero-text);
   padding-bottom: 4rem;
 }
+.hero.mini { padding-bottom: 1rem; }
 .nav {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 1rem 1.5rem;
 }
 .logo { font-size: 1.3rem; font-weight: bold; letter-spacing: 1px; }
-.lang-btn {
+.nav-btns { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
+.lang-btn, .theme-btn {
   background: transparent;
-  color: var(--crema);
-  border: 1px solid var(--crema);
+  color: var(--hero-text);
+  border: 1px solid var(--hero-text);
   padding: 0.3rem 0.8rem;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
+  min-width: 3.2em;
 }
 .hero-content {
   text-align: center;
@@ -45,7 +67,7 @@ body {
   margin: 0 auto;
 }
 .hero-content h1 { font-size: 2.2rem; margin-bottom: 0.8rem; }
-.subtitle { color: #cfc8bc; margin-bottom: 2rem; }
+.subtitle { color: var(--hero-sub); margin-bottom: 2rem; }
 .cta {
   display: inline-block;
   background: var(--rojo);
@@ -62,7 +84,7 @@ body {
   margin: 0 auto;
   padding: 3rem 1.5rem;
 }
-.section.alt { background: #f1ebe0; max-width: none; }
+.section.alt { background: var(--alt); max-width: none; }
 .section.alt > * { max-width: 700px; margin-left: auto; margin-right: auto; }
 .section h2 {
   font-size: 1.8rem;
@@ -82,7 +104,7 @@ body {
   letter-spacing: 1px;
 }
 .menu-block ul { list-style: none; }
-.menu-block li { padding: 0.3rem 0; border-bottom: 1px dotted #d8d0c2; }
+.menu-block li { padding: 0.3rem 0; border-bottom: 1px dotted var(--linea); }
 .menu-price {
   font-size: 1.4rem;
   color: var(--rojo);
@@ -91,7 +113,7 @@ body {
 }
 .menu-incluye { color: var(--gris); font-size: 0.95rem; }
 
-/* --- Oferta del día --- */
+/* --- Bocadillo del día --- */
 .deal-box {
   margin-top: 2rem;
   background: var(--verde);
@@ -103,10 +125,10 @@ body {
 .deal-box h3 { margin-bottom: 0.8rem; }
 .deal-box .semana { list-style: none; }
 .deal-box .semana li { padding: 0.35rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.25); }
-.deal-box .semana li.hoy { background: rgba(255,255,255,0.18); border-radius: 6px; font-weight: bold; }
+.deal-box .semana li.hoy { background: rgba(0,0,0,0.25); border-radius: 6px; font-weight: bold; }
 .deal-box .dia { display: inline-block; min-width: 6.5em; font-weight: bold; }
 .deal-box .badge {
-  background: var(--crema);
+  background: #fff;
   color: var(--verde);
   font-size: 0.75rem;
   padding: 0.1rem 0.5rem;
@@ -120,17 +142,24 @@ body {
 
 /* --- Carta --- */
 .carta-cat { margin-bottom: 1.5rem; }
+.carta-cat h3 {
+  color: var(--verde);
+  margin: 1.2rem 0 0.4rem;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 .carta-item {
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0;
-  border-bottom: 1px dotted #cfc5b2;
+  border-bottom: 1px dotted var(--linea);
 }
 
 /* --- Footer --- */
 .footer {
-  background: var(--tinta);
-  color: var(--crema);
+  background: var(--hero-bg);
+  color: var(--hero-text);
   padding: 3rem 1.5rem;
 }
 .footer h2 { font-size: 1.6rem; margin-bottom: 1.5rem; }
@@ -141,17 +170,11 @@ body {
   max-width: 800px;
   margin: 0 auto;
 }
-.whatsapp {
-  display: inline-block;
-  background: #25d366;
-  color: #fff;
-  text-decoration: none;
-  padding: 0.7rem 1.4rem;
-  border-radius: 6px;
-  margin-top: 0.5rem;
-}
+.horario-lista { list-style: none; }
+.horario-lista li { padding: 0.2rem 0; }
+.horario-lista .dia-h { display: inline-block; min-width: 9em; font-weight: bold; }
 .map iframe { width: 100%; height: 250px; border: 0; border-radius: 8px; }
-.fine { text-align: center; margin-top: 2rem; color: #9a9184; font-size: 0.85rem; }
+.fine { text-align: center; margin-top: 2rem; color: var(--hero-sub); font-size: 0.85rem; }
 
 @media (max-width: 600px) {
   .hero-content h1 { font-size: 1.6rem; }
