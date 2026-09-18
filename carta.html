@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta — Restaurant BJ</title>
+  <meta name="description" content="Carta completa de Restaurant BJ, Vila Olímpica, Barcelona: menú del día, bocadillos, tapas, platos combinados y más.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Página para el QR de las mesas: toda la carta en una sola página -->
+  <header class="hero mini">
+    <nav class="nav">
+      <span class="logo">Restaurant BJ</span>
+      <div class="nav-btns">
+        <button id="lang-toggle" class="lang-btn" aria-label="Change language">EN</button>
+        <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">☾</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hoy" class="section">
+    <h2 data-es="Menú del día" data-en="Today's menu">Menú del día</h2>
+    <p class="updated" id="menu-updated"></p>
+    <div id="menu-del-dia"></div>
+    <div id="bocadillo-del-dia" class="deal-box"></div>
+  </section>
+
+  <section id="ofertas-seccion" class="section alt">
+    <h2 data-es="Menús y ofertas" data-en="Deals & menus">Menús y ofertas</h2>
+    <div id="ofertas"></div>
+    <h2 class="sub" data-es="Desayunos" data-en="Breakfast">Desayunos</h2>
+    <div id="desayunos"></div>
+  </section>
+
+  <section id="carta" class="section">
+    <h2 data-es="La carta" data-en="Our menu">La carta</h2>
+    <div id="carta-fija"></div>
+  </section>
+
+  <footer class="footer">
+    <h2 data-es="Horario" data-en="Hours">Horario</h2>
+    <ul class="horario-lista">
+      <li><span class="dia-h" data-es="Lunes" data-en="Monday">Lunes</span> 7:00 – 17:00</li>
+      <li><span class="dia-h" data-es="Martes a viernes" data-en="Tuesday to Friday">Martes a viernes</span> 7:00 – 23:00</li>
+      <li><span class="dia-h" data-es="Sábado" data-en="Saturday">Sábado</span> 8:00 – 23:00</li>
+      <li><span class="dia-h" data-es="Domingo" data-en="Sunday">Domingo</span> 9:00 – 16:00</li>
+    </ul>
+    <p class="fine" data-es="Restaurant BJ · Vila Olímpica, Barcelona · Si tienes alguna alergia, consulta a nuestros empleados" data-en="Restaurant BJ · Vila Olímpica, Barcelona · If you have any allergies, please ask our staff">Restaurant BJ · Vila Olímpica, Barcelona · Si tienes alguna alergia, consulta a nuestros empleados</p>
+  </footer>
+
+  <script src="data/menu.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
