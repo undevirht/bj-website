@@ -4,7 +4,6 @@
 let lang = "es";
 
 function t(obj) {
-  // Devuelve el texto en el idioma activo
   if (typeof obj === "string") return obj;
   return obj[lang] || obj.es;
 }
@@ -28,24 +27,39 @@ function renderMenu() {
       <p class="menu-incluye">${t(m.incluye)}</p>
     </div>`;
 
-  // Bocadillo / oferta del día
+  // Bocadillo del día (semana completa, hoy resaltado)
   const b = d.bocadilloDelDia;
+  const hoy = (new Date().getDay() + 6) % 7; // 0 = lunes
   document.getElementById("bocadillo-del-dia").innerHTML = `
-    <span>${t(b)} — ${t(b.detalle)}</span>
-    <div class="deal-price">${b.price}</div>`;
+    <h3>${t(b.titulo)} — ${b.price}</h3>
+    <ul class="semana">
+      ${b.dias.map((x, i) => `
+        <li class="${i === hoy ? "hoy" : ""}">
+          <span class="dia">${t(x.dia)}</span> ${t(x)}
+          ${i === hoy ? `<span class="badge">${lang === "es" ? "HOY" : "TODAY"}</span>` : ""}
+        </li>`).join("")}
+    </ul>`;
+
+  // Menús de oferta + desayunos
+  document.getElementById("ofertas").innerHTML = renderItems(d.ofertas);
+  document.getElementById("desayunos").innerHTML = renderItems(d.desayunos);
 
   // Carta fija
   document.getElementById("carta-fija").innerHTML = d.carta.map(cat => `
     <div class="carta-cat">
       <h3>${t(cat.categoria)}</h3>
-      ${cat.items.map(i => `
-        <div class="carta-item"><span>${t(i)}</span><span>${i.price}</span></div>
-      `).join("")}
+      ${cat.nota ? `<p class="carta-nota">${t(cat.nota)}</p>` : ""}
+      ${renderItems(cat.items)}
     </div>`).join("");
 }
 
+function renderItems(items) {
+  return items.map(i => `
+    <div class="carta-item"><span>${t(i)}</span><span class="precio">${i.price}</span></div>
+  `).join("");
+}
+
 function applyLang() {
-  // Textos estáticos marcados con data-es / data-en
   document.querySelectorAll("[data-es]").forEach(el => {
     el.textContent = el.dataset[lang];
   });
