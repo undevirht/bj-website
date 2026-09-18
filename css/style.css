@@ -137,6 +137,77 @@ body {
   font-weight: bold;
 }
 .section h2.sub { margin-top: 2.5rem; }
+
+/* --- Acordeón (secciones desplegables) --- */
+.acordeon {
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  margin-bottom: 0.7rem;
+  background: var(--bg);
+  overflow: hidden;
+}
+.acordeon summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1.1rem;
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--verde);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.acordeon summary::-webkit-details-marker { display: none; }
+.acordeon summary::after {
+  content: "▾";
+  color: var(--gris);
+  transition: transform 0.2s;
+}
+.acordeon[open] summary::after { transform: rotate(180deg); }
+.acordeon[open] summary { border-bottom: 1px solid var(--linea); }
+.acordeon .num {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: var(--gris);
+  margin-left: auto;
+  margin-right: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.acordeon-body { padding: 0.5rem 1.1rem 1rem; }
+
+/* --- Fotos del local --- */
+.fotos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+.foto { position: relative; margin: 0; }
+.foto img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.foto .foto-placeholder { display: none; }
+.foto.vacia img { display: none; }
+.foto.vacia .foto-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 220px;
+  border: 2px dashed var(--linea);
+  border-radius: 8px;
+  color: var(--gris);
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+@media (max-width: 600px) { .fotos-grid { grid-template-columns: 1fr; } }
 .carta-nota { color: var(--gris); font-size: 0.9rem; margin-bottom: 0.5rem; font-style: italic; }
 .carta-item .precio { white-space: nowrap; margin-left: 1rem; }
 
