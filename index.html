@@ -13,7 +13,10 @@
   <header class="hero">
     <nav class="nav">
       <span class="logo">Restaurant BJ</span>
-      <button id="lang-toggle" class="lang-btn" aria-label="Change language">EN</button>
+      <div class="nav-btns">
+        <button id="lang-toggle" class="lang-btn" aria-label="Change language">EN</button>
+        <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">☾</button>
+      </div>
     </nav>
     <div class="hero-content">
       <!-- FOTO PENDIENTE: fachada o interior del bar -->
@@ -60,12 +63,13 @@
     <h2 data-es="Dónde estamos" data-en="Find us">Dónde estamos</h2>
     <div class="footer-grid">
       <div>
-        <p><strong data-es="Horario" data-en="Hours">Horario</strong><br>
-        <span id="horario"><!-- PENDIENTE: horario real --> Lun–Vie · --:-- a --:--</span></p>
-        <p>
-          <!-- PENDIENTE: número real de WhatsApp (formato 34XXXXXXXXX) -->
-          <a class="whatsapp" href="https://wa.me/34XXXXXXXXX" data-es="Escríbenos por WhatsApp" data-en="Message us on WhatsApp">Escríbenos por WhatsApp</a>
-        </p>
+        <p><strong data-es="Horario" data-en="Hours">Horario</strong></p>
+        <ul class="horario-lista">
+          <li><span class="dia-h" data-es="Lunes" data-en="Monday">Lunes</span> 7:00 – 17:00</li>
+          <li><span class="dia-h" data-es="Martes a viernes" data-en="Tuesday to Friday">Martes a viernes</span> 7:00 – 23:00</li>
+          <li><span class="dia-h" data-es="Sábado" data-en="Saturday">Sábado</span> 8:00 – 23:00</li>
+          <li><span class="dia-h" data-es="Domingo" data-en="Sunday">Domingo</span> 9:00 – 16:00</li>
+        </ul>
       </div>
       <div class="map">
         <iframe
