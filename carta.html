@@ -48,7 +48,13 @@
     <p class="fine" data-es="Restaurant BJ · Vila Olímpica, Barcelona · Si tienes alguna alergia, consulta a nuestros empleados" data-en="Restaurant BJ · Vila Olímpica, Barcelona · If you have any allergies, please ask our staff">Restaurant BJ · Vila Olímpica, Barcelona · Si tienes alguna alergia, consulta a nuestros empleados</p>
   </footer>
 
-  <script src="data/menu.js"></script>
-  <script src="js/main.js"></script>
+  <!-- Carga el menú evitando que el navegador muestre una versión antigua en caché -->
+  <script>
+    (function () {
+      var v = Math.floor(Date.now() / 120000); // se refresca como mucho cada 2 minutos
+      document.write('<scr' + 'ipt src="data/menu.js?v=' + v + '"><\/scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="js/main.js?v=' + v + '"><\/scr' + 'ipt>');
+    })();
+  </script>
 </body>
 </html>
