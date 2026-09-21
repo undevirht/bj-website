@@ -17,16 +17,16 @@ const MENU_DATA = {
     incluye: { es: "Pan, bebida y postre o café incluidos", en: "Bread, drink and dessert or coffee included" },
     primeros: [
       { es: "Ensalada con atún", en: "Tuna salad" },
-      { es: "Ravioli a la napolitana", en: "" }
+      { es: "Ravioli a la napolitana", en: "a" }
       { es: "Rollitos de primavera", en: "Spring rolls" }
       { es: "Arroz tres delicias", en: "Fried rice" }
       { es: "Tortilla con chorizo", en: "Chorizo omelette" }
     ],
     segundos: [
-      { es: "Galta al horno", en: "" },
+      { es: "Galta al horno", en: "a" },
       { es: "Solomillo de cerdo a la plancha", en: "Pork sirloign" }
       { es: "Alitas de pollo rebozadas", en: "Marinated fried wings" }
-      { es: "Calamares a la romana", en: "" }
+      { es: "Calamares a la romana", en: "a" }
       { es: "Bistec de ternera", en: "Steak with fries" }
     ]
   },
