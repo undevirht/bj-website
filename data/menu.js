@@ -9,19 +9,25 @@
 const MENU_DATA = {
 
   // Fecha de la última actualización (se muestra en la web)
-  updated: "2026-09-18",
+  updated: "2026-09-21",
 
   // ---------- MENÚ DEL DÍA (cambia cada día — editar aquí) ----------
   menuDelDia: {
     price: "12,50 €",
     incluye: { es: "Pan, bebida y postre o café incluidos", en: "Bread, drink and dessert or coffee included" },
     primeros: [
-      { es: "Ejemplo: Lentejas caseras", en: "Example: Homemade lentil stew" },
-      { es: "Ejemplo: Ensalada mixta", en: "Example: Mixed salad" }
+      { es: "Ensalada con atún", en: "Tuna salad" },
+      { es: "Ravioli a la napolitana", en: "" }
+      { es: "Rollitos de primavera", en: "Spring rolls" }
+      { es: "Arroz tres delicias", en: "Fried rice" }
+      { es: "Tortilla con chorizo", en: "Chorizo omelette" }
     ],
     segundos: [
-      { es: "Ejemplo: Pollo a la plancha con patatas", en: "Example: Grilled chicken with fries" },
-      { es: "Ejemplo: Merluza a la romana", en: "Example: Battered hake" }
+      { es: "Galta al horno", en: "" },
+      { es: "Solomillo de cerdo a la plancha", en: "Pork sirloign" }
+      { es: "Alitas de pollo rebozadas", en: "Marinated fried wings" }
+      { es: "Calamares a la romana", en: "" }
+      { es: "Bistec de ternera", en: "Steak with fries" }
     ]
   },
 
