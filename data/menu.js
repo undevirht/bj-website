@@ -15,19 +15,20 @@ const MENU_DATA = {
   menuDelDia: {
     price: "12,50 €",
     incluye: { es: "Pan, bebida y postre o café incluidos", en: "Bread, drink and dessert or coffee included" },
+    // OJO: cada plato acaba en coma, menos el último de la lista
     primeros: [
       { es: "Ensalada con atún", en: "Tuna salad" },
-      { es: "Ravioli a la napolitana", en: "a" }
-      { es: "Rollitos de primavera", en: "Spring rolls" }
-      { es: "Arroz tres delicias", en: "Fried rice" }
+      { es: "Ravioli a la napolitana", en: "Ravioli napolitana" },
+      { es: "Rollitos de primavera", en: "Spring rolls" },
+      { es: "Arroz tres delicias", en: "Three-delight fried rice" },
       { es: "Tortilla con chorizo", en: "Chorizo omelette" }
     ],
     segundos: [
-      { es: "Galta al horno", en: "a" },
-      { es: "Solomillo de cerdo a la plancha", en: "Pork sirloign" }
-      { es: "Alitas de pollo rebozadas", en: "Marinated fried wings" }
-      { es: "Calamares a la romana", en: "a" }
-      { es: "Bistec de ternera", en: "Steak with fries" }
+      { es: "Galta al horno", en: "Slow-baked pork cheek" },
+      { es: "Solomillo de cerdo a la plancha", en: "Grilled pork sirloin" },
+      { es: "Alitas de pollo rebozadas", en: "Battered chicken wings" },
+      { es: "Calamares a la romana", en: "Fried squid rings" },
+      { es: "Bistec de ternera", en: "Veal steak" }
     ]
   },
 
