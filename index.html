@@ -1,100 +1,228 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restaurant BJ — Menú del día en Vila Olímpica, Barcelona</title>
-  <meta name="description" content="Restaurant BJ: menú del día, bocadillos y café a buen precio junto a la UPF Ciutadella. Comida casera, rápida y honesta. Familia sirviendo al barrio.">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b2620" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121009" media="(prefers-color-scheme: dark)">
+
+<title>Restaurant BJ — Menú del día, bocadillos y carta · Barcelona</title>
+<meta name="description" content="Menú del día, bocadillos, ofertas y carta de Restaurant BJ, Carrer de Llull 13, Sant Martí, Barcelona. En español, català y English.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Restaurant BJ">
+<meta property="og:title" content="Restaurant BJ — Menú del día, bocadillos y carta">
+<meta property="og:description" content="Menú del día, bocadillos, ofertas y carta. Carrer de Llull 13, Sant Martí, Barcelona.">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="ca_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<!-- [PENDIENTE: og:url con el dominio definitivo y og:image con una foto real del local, 1200x630] -->
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="css/estilos.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🍽️</text></svg>">
+
+<!-- Datos estructurados. app.js los mantiene sincronizados con js/datos.js
+     (horarios, dirección, teléfono) para que no se dupliquen a mano. -->
+<script type="application/ld+json" id="datos-estructurados">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Restaurant BJ",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Carrer de Llull, 13",
+    "addressLocality": "Barcelona",
+    "addressRegion": "Barcelona",
+    "postalCode": "08005",
+    "addressCountry": "ES"
+  },
+  "priceRange": "€",
+  "hasMenu": "#carta",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "07:00", "closes": "17:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "23:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "23:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "09:00", "closes": "16:00" }
+  ]
+}
+</script>
 </head>
+
 <body>
 
-  <!-- ===== CABECERA ===== -->
-  <header class="hero">
-    <nav class="nav">
-      <span class="logo">Restaurant BJ</span>
-      <div class="nav-btns">
-        <button id="lang-toggle" class="lang-btn" aria-label="Change language">EN</button>
-        <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">☾</button>
-      </div>
-    </nav>
-    <div class="hero-content">
-      <!-- FOTO PENDIENTE: fachada o interior del bar -->
-      <h1 data-es="Comida casera, rápida y honesta" data-en="Honest, fast, homemade food">Comida casera, rápida y honesta</h1>
-      <p class="subtitle" data-es="A 2 minutos de la UPF Ciutadella · Vila Olímpica, Barcelona" data-en="2 minutes from UPF Ciutadella · Vila Olímpica, Barcelona">A 2 minutos de la UPF Ciutadella · Vila Olímpica, Barcelona</p>
-      <a href="#hoy" class="cta" data-es="Ver el menú de hoy" data-en="See today's menu">Ver el menú de hoy</a>
+<a class="saltar" href="#contenido" data-t="saltar">Saltar al contenido</a>
+
+<!-- ===================== CABECERA ===================== -->
+<header class="cabecera">
+  <span class="marca">Restaurant BJ</span>
+
+  <!-- Indicador abierto/cerrado. Al pulsarlo lleva a los horarios. -->
+  <a class="estado" id="estado" href="#horarios" data-abierto="si">
+    <span class="punto" aria-hidden="true"></span>
+    <span id="estado-texto">&nbsp;</span>
+  </a>
+
+  <div class="botones-cabecera">
+    <div class="selector-idioma">
+      <label class="solo-lector" for="sel-idioma" data-t="idiomaLabel">Idioma</label>
+      <select id="sel-idioma" class="btn-icono">
+        <option value="es">ES</option>
+        <option value="ca">CA</option>
+        <option value="en">EN</option>
+      </select>
+      <span class="flecha-sel" aria-hidden="true">▾</span>
     </div>
-  </header>
+    <button type="button" id="btn-tema" class="btn-icono" aria-label="Cambiar a tema oscuro" aria-pressed="false">
+      <span aria-hidden="true" id="icono-tema">☾</span>
+    </button>
+  </div>
+</header>
 
-  <!-- ===== MENÚ DE HOY (se rellena desde data/menu.js) ===== -->
-  <section id="hoy" class="section">
-    <h2 data-es="Menú de hoy" data-en="Today's menu">Menú de hoy</h2>
-    <p class="updated" id="menu-updated"></p>
-    <div id="menu-del-dia"></div>
-    <div id="bocadillo-del-dia" class="deal-box"></div>
+<!-- ===================== NAVEGACIÓN ===================== -->
+<!-- Móvil: barra inferior fija · Escritorio: barra superior -->
+<nav class="nav-principal" id="nav-principal" role="tablist" aria-label="Secciones de la carta">
+
+  <a class="pestana" role="tab" id="tab-menu-del-dia" href="#menu-del-dia"
+     aria-controls="vista-menu-del-dia" aria-selected="true" tabindex="0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 4v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3V4M7 4v9M7 13v7"></path>
+      <path d="M17 4c-1.5 2-2 4-2 6s.5 3 2 3v7"></path>
+    </svg>
+    <span class="etiqueta" data-t="nav-menu">Menú</span>
+  </a>
+
+  <a class="pestana" role="tab" id="tab-bocadillos" href="#bocadillos"
+     aria-controls="vista-bocadillos" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <path d="M3 8c0-2.2 4-4 9-4s9 1.8 9 4v1H3V8Z"></path>
+      <path d="M3 12h18M3 12v1c0 1.7 1.5 3 3 3h12c1.7 0 3-1.3 3-3v-1"></path>
+      <path d="M4 18h16"></path>
+    </svg>
+    <span class="etiqueta" data-t="nav-bocadillos">Bocadillos</span>
+  </a>
+
+  <a class="pestana" role="tab" id="tab-ofertas" href="#ofertas"
+     aria-controls="vista-ofertas" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <path d="M20.6 12.4 12.4 20.6a2 2 0 0 1-2.8 0l-6.2-6.2a2 2 0 0 1-.6-1.4V4.8A1.8 1.8 0 0 1 4.8 3h8.2a2 2 0 0 1 1.4.6l6.2 6.2a2 2 0 0 1 0 2.6Z"></path>
+      <circle cx="8" cy="8" r="1.4"></circle>
+    </svg>
+    <span class="etiqueta" data-t="nav-ofertas">Ofertas</span>
+  </a>
+
+  <a class="pestana" role="tab" id="tab-carta" href="#carta"
+     aria-controls="vista-carta" aria-selected="false" tabindex="-1">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5.5A1.5 1.5 0 0 1 4 19.5Z"></path>
+      <path d="M8 7h8M8 11h8M8 15h5"></path>
+    </svg>
+    <span class="etiqueta" data-t="nav-carta">Carta</span>
+  </a>
+</nav>
+
+<!-- ===================== CONTENIDO ===================== -->
+<main id="contenido" tabindex="-1">
+
+  <!-- Avisos del local (festivos, vacaciones, cierres). Se rellena desde datos.js -->
+  <div id="avisos-globales" class="vista" style="padding-bottom:0"></div>
+
+  <!-- ---------- 1. MENÚ DEL DÍA ---------- -->
+  <section class="vista" id="vista-menu-del-dia" role="tabpanel"
+           aria-labelledby="tab-menu-del-dia" tabindex="0">
+    <h1 class="titulo-vista" data-t="titulo-menu">Menú del día</h1>
+    <p class="subtitulo-vista" id="menu-subtitulo">&nbsp;</p>
+    <div id="contenido-menu"></div>
   </section>
 
-  <!-- ===== OFERTAS Y DESAYUNOS ===== -->
-  <section id="ofertas-seccion" class="section">
-    <h2 data-es="Menús y ofertas" data-en="Deals & menus">Menús y ofertas</h2>
-    <div id="ofertas"></div>
+  <!-- ---------- 2. BOCADILLOS DEL DÍA ---------- -->
+  <section class="vista" id="vista-bocadillos" role="tabpanel"
+           aria-labelledby="tab-bocadillos" tabindex="0" hidden>
+    <h1 class="titulo-vista" data-t="titulo-bocadillos">Bocadillos del día</h1>
+    <p class="subtitulo-vista" id="bocadillos-subtitulo">&nbsp;</p>
+    <div id="contenido-bocadillos"></div>
   </section>
 
-  <!-- ===== CARTA FIJA ===== -->
-  <section id="carta" class="section alt">
-    <h2 data-es="La carta" data-en="Our menu">La carta</h2>
-    <div id="carta-fija"></div>
+  <!-- ---------- 3. MENÚS Y OFERTAS ---------- -->
+  <section class="vista" id="vista-ofertas" role="tabpanel"
+           aria-labelledby="tab-ofertas" tabindex="0" hidden>
+    <h1 class="titulo-vista" data-t="titulo-ofertas">Menús y ofertas</h1>
+    <p class="subtitulo-vista" data-t="sub-ofertas">Combinados, desayunos y ofertas de la casa.</p>
+    <div id="contenido-ofertas"></div>
   </section>
 
-  <!-- ===== QUIÉNES SOMOS ===== -->
-  <section id="historia" class="section">
-    <h2 data-es="La casa" data-en="About us">La casa</h2>
-    <!-- Huecos para fotos: guardar como photos/exterior.jpg y photos/interior.jpg y aparecen solas -->
-    <div class="fotos-grid">
-      <figure class="foto">
-        <img src="photos/exterior.jpg" alt="Fachada de Restaurant BJ" loading="lazy" onerror="this.parentElement.classList.add('vacia')">
-        <span class="foto-placeholder" data-es="Foto del exterior — próximamente" data-en="Outside photo — coming soon">Foto del exterior — próximamente</span>
-      </figure>
-      <figure class="foto">
-        <img src="photos/interior.jpg" alt="Interior de Restaurant BJ" loading="lazy" onerror="this.parentElement.classList.add('vacia')">
-        <span class="foto-placeholder" data-es="Foto del interior — próximamente" data-en="Inside photo — coming soon">Foto del interior — próximamente</span>
-      </figure>
+  <!-- ---------- 4. CARTA ---------- -->
+  <section class="vista" id="vista-carta" role="tabpanel"
+           aria-labelledby="tab-carta" tabindex="0" hidden>
+    <h1 class="titulo-vista" data-t="titulo-carta">La carta</h1>
+    <p class="subtitulo-vista" data-t="sub-carta">Toca una categoría para ver los platos.</p>
+
+    <div id="filtro-alergenos"></div>
+    <div id="contenido-carta"></div>
+    <div id="leyenda-alergenos"></div>
+  </section>
+
+  <!-- ---------- HORARIOS (vista propia, sin pestaña) ---------- -->
+  <section class="vista" id="vista-horarios" role="region"
+           aria-labelledby="titulo-horarios" tabindex="-1" hidden>
+    <h1 class="titulo-vista" id="titulo-horarios" data-t="titulo-horarios">Horarios</h1>
+    <p class="subtitulo-vista" data-t="sub-horarios">Hora de Barcelona (Europe/Madrid).</p>
+    <div id="contenido-horarios"></div>
+  </section>
+
+  <noscript>
+    <div class="vista">
+      <h1 class="titulo-vista">Restaurant BJ</h1>
+      <p>Esta web necesita JavaScript para mostrar la carta. Pregunta al personal por el menú de hoy.</p>
+      <p><strong>Carrer de Llull, 13 · Sant Martí · 08005 Barcelona</strong></p>
+      <ul>
+        <li>Lunes: 7:00 – 17:00</li>
+        <li>Martes a viernes: 7:00 – 23:00</li>
+        <li>Sábado: 8:00 – 23:00</li>
+        <li>Domingo: 9:00 – 16:00</li>
+      </ul>
     </div>
-    <p data-es="Somos un negocio familiar sirviendo al barrio desde hace años. Sin pretensiones: buena comida, buen precio y caras conocidas."
-       data-en="We are a family business that has served this neighborhood for years. No frills: good food, fair prices, familiar faces.">
-      Somos un negocio familiar sirviendo al barrio desde hace años. Sin pretensiones: buena comida, buen precio y caras conocidas.
-    </p>
-  </section>
+  </noscript>
+</main>
 
-  <!-- ===== CONTACTO ===== -->
-  <footer id="contacto" class="footer">
-    <h2 data-es="Dónde estamos" data-en="Find us">Dónde estamos</h2>
-    <div class="footer-grid">
-      <div>
-        <p><strong data-es="Horario" data-en="Hours">Horario</strong></p>
-        <ul class="horario-lista">
-          <li><span class="dia-h" data-es="Lunes" data-en="Monday">Lunes</span> 7:00 – 17:00</li>
-          <li><span class="dia-h" data-es="Martes a viernes" data-en="Tuesday to Friday">Martes a viernes</span> 7:00 – 23:00</li>
-          <li><span class="dia-h" data-es="Sábado" data-en="Saturday">Sábado</span> 8:00 – 23:00</li>
-          <li><span class="dia-h" data-es="Domingo" data-en="Sunday">Domingo</span> 9:00 – 16:00</li>
-        </ul>
-      </div>
-      <div class="map">
-        <iframe
-          src="https://www.google.com/maps?q=Restaurant+BJ,+Vila+Ol%C3%ADmpica,+Barcelona&output=embed"
-          loading="lazy" title="Mapa Restaurant BJ"></iframe>
-      </div>
+<!-- ===================== PIE ===================== -->
+<footer class="pie">
+  <div class="pie-interior">
+
+    <div>
+      <h2 data-t="pie-donde">Dónde estamos</h2>
+      <p>
+        <strong>Restaurant BJ</strong><br>
+        Carrer de Llull, 13<br>
+        Sant Martí · 08005 Barcelona
+      </p>
+      <p class="pie-fino" id="pie-lema"></p>
+      <div class="pie-enlaces" id="pie-contacto"></div>
     </div>
-    <p class="fine" data-es="Restaurant BJ · Vila Olímpica, Barcelona" data-en="Restaurant BJ · Vila Olímpica, Barcelona">Restaurant BJ · Vila Olímpica, Barcelona</p>
-  </footer>
 
-  <!-- Carga el menú evitando que el navegador muestre una versión antigua en caché -->
-  <script>
-    (function () {
-      var v = Math.floor(Date.now() / 120000); // se refresca como mucho cada 2 minutos
-      document.write('<scr' + 'ipt src="data/menu.js?v=' + v + '"><\/scr' + 'ipt>');
-      document.write('<scr' + 'ipt src="js/main.js?v=' + v + '"><\/scr' + 'ipt>');
-    })();
-  </script>
+    <div>
+      <h2 data-t="pie-casa">La casa</h2>
+      <p id="pie-historia"></p>
+      <div id="pie-fotos"></div>
+    </div>
+
+    <div>
+      <h2 data-t="pie-horario">Horario</h2>
+      <div id="pie-horario"></div>
+      <p><a href="#horarios" data-t="ver-horarios">Ver todos los horarios y avisos</a></p>
+    </div>
+
+    <div>
+      <p class="pie-fino" id="pie-alergias"></p>
+      <p class="pie-fino" id="pie-legales"></p>
+      <p class="pie-fino">Restaurant BJ · Carrer de Llull, 13 · 08005 Barcelona</p>
+    </div>
+
+  </div>
+</footer>
+
+<script src="js/datos.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

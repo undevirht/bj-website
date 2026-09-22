@@ -1,0 +1,745 @@
+/* ============================================================================
+   BJ · Hoja de estilos
+   Mobile-first. Sin frameworks, sin fuentes web.
+   Orden: 1 tokens · 2 base · 3 cabecera · 4 navegación · 5 vistas
+          6 componentes · 7 pie · 8 animaciones · 9 pantallas grandes
+          10 plegables (viewport segments)
+   ========================================================================== */
+
+/* ============ 1. TOKENS ==================================================== */
+:root {
+  /* Color — tema claro */
+  --fondo: #faf6ef;
+  --fondo-2: #fffdf8;
+  --superficie: #f1ebe0;
+  --texto: #2b2620;
+  --texto-suave: #6b6459;
+  --linea: #d8d0c2;
+  --acento: #b3402a;
+  --verde: #4a5d3a;
+  --surf-verde: #4a5d3a;
+  --surf-verde-txt: #ffffff;
+  --surf-rojo: #b3402a;
+  --surf-rojo-txt: #ffffff;
+  --cabecera-bg: #2b2620;
+  --cabecera-txt: #faf6ef;
+  --sombra: 0 1px 2px rgba(43, 38, 32, .06), 0 4px 12px rgba(43, 38, 32, .06);
+
+  /* Tipografía fluida */
+  --t-xs: clamp(.72rem, .68rem + .25vw, .82rem);
+  --t-sm: clamp(.82rem, .78rem + .25vw, .92rem);
+  --t-base: clamp(1rem, .96rem + .2vw, 1.06rem);
+  --t-md: clamp(1.06rem, 1rem + .4vw, 1.2rem);
+  --t-lg: clamp(1.25rem, 1.1rem + .8vw, 1.6rem);
+  --t-xl: clamp(1.5rem, 1.25rem + 1.4vw, 2.1rem);
+
+  /* Espaciado fluido */
+  --e-1: .25rem;
+  --e-2: .5rem;
+  --e-3: clamp(.7rem, .6rem + .5vw, 1rem);
+  --e-4: clamp(1rem, .85rem + .8vw, 1.5rem);
+  --e-5: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+
+  --radio: 12px;
+  --radio-sm: 8px;
+  --borde-vista: clamp(.9rem, .5rem + 2vw, 1.5rem);  /* margen lateral */
+  --alto-cabecera: 56px;
+  --alto-barra: 58px;
+
+  /* Duraciones de animación */
+  --dur-corta: 150ms;
+  --dur-media: 240ms;
+  --dur-larga: 340ms;
+  --curva: cubic-bezier(.2, .7, .3, 1);
+
+  color-scheme: light dark;
+}
+
+/* Tema oscuro automático (y manual con data-tema="oscuro") */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --fondo: #1d1913;
+    --fondo-2: #26211a;
+    --superficie: #26211a;
+    --texto: #f0e9dc;
+    --texto-suave: #a39a8b;
+    --linea: #463f35;
+    --acento: #e8785e;
+    --verde: #7a9662;
+    --surf-verde: #33402a;
+    --surf-verde-txt: #dfe9d4;
+    --surf-rojo: #86301f;
+    --surf-rojo-txt: #ffffff;
+    --cabecera-bg: #121009;
+    --cabecera-txt: #f0e9dc;
+    --sombra: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 12px rgba(0, 0, 0, .3);
+  }
+}
+:root[data-tema="oscuro"] {
+  --fondo: #1d1913;
+  --fondo-2: #26211a;
+  --superficie: #26211a;
+  --texto: #f0e9dc;
+  --texto-suave: #a39a8b;
+  --linea: #463f35;
+  --acento: #e8785e;
+  --verde: #7a9662;
+  --surf-verde: #33402a;
+  --surf-verde-txt: #dfe9d4;
+  --surf-rojo: #86301f;
+  --surf-rojo-txt: #ffffff;
+  --cabecera-bg: #121009;
+  --cabecera-txt: #f0e9dc;
+  --sombra: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 12px rgba(0, 0, 0, .3);
+}
+
+/* ============ 2. BASE ===================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--t-base);
+  line-height: 1.55;
+  color: var(--texto);
+  background: var(--fondo);
+  min-height: 100svh;
+  overflow-x: hidden;           /* red de seguridad a 280 px */
+  overflow-wrap: break-word;
+  padding-bottom: calc(var(--alto-barra) + env(safe-area-inset-bottom, 0px));
+}
+
+h1, h2, h3, h4 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.2;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+ul, ol { list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: var(--acento); }
+
+:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.oculto { display: none !important; }
+.solo-lector {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.saltar {
+  position: absolute; left: var(--e-3); top: -100px; z-index: 100;
+  background: var(--acento); color: #fff; padding: .7rem 1rem;
+  border-radius: var(--radio-sm); text-decoration: none;
+  transition: top var(--dur-corta) var(--curva);
+}
+.saltar:focus { top: calc(var(--e-2) + env(safe-area-inset-top, 0px)); }
+
+/* ============ 3. CABECERA ================================================= */
+/* Rejilla fija, no flexible: la cabecera tiene siempre la misma forma
+   independientemente de lo largo que sea el texto. Así no cambia de
+   disposición al pasar de español a inglés.
+   Móvil:      fila 1 = nombre + botones · fila 2 = abierto/cerrado
+   Desde 900px: todo en una sola fila, que ahí cabe en los dos idiomas. */
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--cabecera-bg);
+  color: var(--cabecera-txt);
+  padding: var(--e-2) var(--borde-vista);
+  padding-top: calc(var(--e-2) + env(safe-area-inset-top, 0px));
+  padding-left: max(var(--borde-vista), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--borde-vista), env(safe-area-inset-right, 0px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "marca  botones"
+    "estado estado";
+  align-items: center;
+  gap: var(--e-1) var(--e-2);
+}
+
+.marca {
+  grid-area: marca;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--t-md);
+  font-weight: 700;
+  letter-spacing: .02em;
+  min-width: 0;
+}
+
+/* Indicador abierto/cerrado — lleva a la vista de horarios */
+.estado {
+  grid-area: estado;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 36px;
+  padding: .3rem .7rem;
+  border-radius: 999px;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: left;
+  background: var(--surf-verde);
+  color: var(--surf-verde-txt);
+  transition: transform var(--dur-corta) var(--curva);
+}
+.estado[data-abierto="no"] { background: var(--surf-rojo); color: var(--surf-rojo-txt); }
+.estado:active { transform: scale(.97); }
+.estado .punto {
+  width: .5rem; height: .5rem; border-radius: 50%;
+  background: currentColor; flex: 0 0 auto;
+}
+.estado[data-abierto="si"] .punto { animation: pulso 2.4s ease-in-out infinite; }
+
+.botones-cabecera { grid-area: botones; display: flex; gap: var(--e-1); }
+.btn-icono {
+  min-width: 44px; min-height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: var(--radio-sm);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  transition: transform var(--dur-corta) var(--curva), background var(--dur-corta);
+}
+.btn-icono:active { transform: scale(.95); }
+
+/* Selector de idioma: se ve como los demás botones de la cabecera,
+   pero abre la lista propia del móvil. */
+.selector-idioma { position: relative; display: inline-flex; }
+select.btn-icono {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0 1.1rem 0 .5rem;
+  min-width: 52px;
+  text-align: center;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+select.btn-icono option {
+  color: var(--texto);
+  background: var(--fondo-2);
+}
+.flecha-sel {
+  position: absolute;
+  right: .35rem; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: .7em;
+  opacity: .8;
+}
+
+/* ============ 4. NAVEGACIÓN =============================================== */
+/* Móvil: barra inferior fija, al alcance del pulgar */
+.nav-principal {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  display: flex;
+  background: var(--fondo-2);
+  border-top: 1px solid var(--linea);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+.nav-principal .pestana {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: .35rem .15rem;
+  font-size: clamp(.6rem, 2.6vw, .78rem);
+  font-weight: 600;
+  color: var(--texto-suave);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--dur-corta) var(--curva), transform var(--dur-corta) var(--curva);
+}
+.nav-principal .pestana svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.nav-principal .pestana:active { transform: scale(.95); }
+.nav-principal .pestana[aria-selected="true"] { color: var(--acento); }
+.nav-principal .pestana::after {
+  content: "";
+  position: absolute; top: 0; left: 50%;
+  width: 0; height: 3px;
+  background: var(--acento);
+  border-radius: 0 0 3px 3px;
+  transform: translateX(-50%);
+  transition: width var(--dur-media) var(--curva);
+}
+.nav-principal .pestana[aria-selected="true"]::after { width: 60%; }
+.nav-principal .etiqueta {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============ 5. VISTAS =================================================== */
+main { display: block; }
+
+.vista {
+  container-type: inline-size;
+  container-name: vista;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--e-4) var(--borde-vista) var(--e-5);
+  padding-left: max(var(--borde-vista), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--borde-vista), env(safe-area-inset-right, 0px));
+}
+.vista[hidden] { display: none; }
+.vista.entrando { animation: entra-vista var(--dur-media) var(--curva) both; }
+
+.titulo-vista {
+  font-size: var(--t-xl);
+  margin-bottom: var(--e-1);
+}
+.subtitulo-vista {
+  color: var(--texto-suave);
+  font-size: var(--t-sm);
+  margin-bottom: var(--e-4);
+}
+
+.bloque { margin-bottom: var(--e-5); }
+.bloque-titulo {
+  font-size: var(--t-lg);
+  color: var(--verde);
+  margin-bottom: var(--e-2);
+  padding-bottom: .2rem;
+  border-bottom: 2px solid var(--linea);
+}
+
+/* ============ 6. COMPONENTES ============================================= */
+
+/* --- Tarjeta --- */
+.tarjeta {
+  background: var(--fondo-2);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: var(--e-4);
+  box-shadow: var(--sombra);
+}
+.tarjeta + .tarjeta { margin-top: var(--e-3); }
+
+/* --- Línea de plato: nombre a la izquierda, precio a la derecha --- */
+.plato {
+  display: flex;
+  align-items: baseline;
+  gap: var(--e-3);
+  padding: .55rem 0;
+  border-bottom: 1px dotted var(--linea);
+}
+.plato:last-child { border-bottom: 0; }
+.plato-nombre {
+  flex: 1 1 auto;
+  min-width: 0;
+  hyphens: auto;          /* nombres largos no se cortan a lo bruto */
+}
+.plato-precio {
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--acento);
+}
+.plato-detalle {
+  display: block;
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
+}
+
+/* --- Etiquetas (vegetariano, picante, novedad, agotado) --- */
+.etiquetas { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
+.etiq {
+  font-size: var(--t-xs);
+  font-weight: 700;
+  padding: .1rem .5rem;
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  color: var(--texto-suave);
+  white-space: nowrap;
+}
+.etiq[data-e="vegetariano"] { background: var(--surf-verde); color: var(--surf-verde-txt); border-color: transparent; }
+.etiq[data-e="picante"],
+.etiq[data-e="novedad"] { background: var(--surf-rojo); color: var(--surf-rojo-txt); border-color: transparent; }
+.etiq[data-e="agotado"] { opacity: .8; text-decoration: line-through; }
+.plato[data-agotado="si"] .plato-nombre { opacity: .55; }
+
+/* --- Alérgenos --- */
+.alergenos { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .25rem; }
+.alergeno {
+  display: inline-flex; align-items: center; gap: .25rem;
+  font-size: var(--t-xs);
+  color: var(--texto-suave);
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  padding: .05rem .45rem;
+}
+.leyenda-alergenos { display: grid; gap: .4rem; margin-top: var(--e-2); }
+@container vista (min-width: 30rem) {
+  .leyenda-alergenos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* --- Precio grande (menú del día) --- */
+.precio-destacado {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--t-xl);
+  font-weight: 700;
+  color: var(--acento);
+  line-height: 1.1;
+}
+
+/* --- Cabecera del menú del día --- */
+.menu-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--e-2);
+  margin-bottom: var(--e-3);
+}
+.menu-fecha {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+.menu-incluye {
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
+}
+
+/* --- Estado vacío --- */
+.vacio {
+  text-align: center;
+  padding: var(--e-5) var(--e-4);
+  min-height: 34svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  background: var(--superficie);
+  border-radius: var(--radio);
+  border: 1px dashed var(--linea);
+}
+.vacio .icono { font-size: 2rem; line-height: 1; }
+.vacio p { color: var(--texto-suave); max-width: 34ch; }
+
+/* --- Avisos --- */
+.aviso {
+  display: flex;
+  gap: var(--e-2);
+  align-items: flex-start;
+  padding: var(--e-3);
+  border-radius: var(--radio-sm);
+  border-left: 4px solid var(--verde);
+  background: var(--superficie);
+  font-size: var(--t-sm);
+  margin-bottom: var(--e-3);
+}
+.aviso[data-tipo="cierre"] { border-left-color: var(--acento); }
+.aviso[data-tipo="aviso"] { border-left-color: #c47b19; }
+
+/* --- Marcador de contenido pendiente --- */
+.pendiente {
+  display: block;
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--acento);
+  background: var(--superficie);
+  border: 1px dashed var(--acento);
+  border-radius: var(--radio-sm);
+  padding: .5rem .7rem;
+  margin: var(--e-2) 0;
+}
+
+/* --- Fila de chips (la usa el filtro de alérgenos) --- */
+.chips {
+  display: flex;
+  gap: var(--e-2);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: .4rem .85rem;
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  background: var(--fondo-2);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--texto-suave);
+  white-space: nowrap;
+  transition: background var(--dur-corta) var(--curva),
+              color var(--dur-corta) var(--curva),
+              transform var(--dur-corta) var(--curva);
+}
+.chip:active { transform: scale(.96); }
+.chip[aria-current="true"] {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #fff;
+}
+
+.sin-resultados { color: var(--texto-suave); padding: var(--e-4) 0; }
+
+/* --- Acordeón de categoría --- */
+.categoria { scroll-margin-top: calc(var(--alto-cabecera) + 64px); }
+.categoria-cabecera {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: 48px;
+  padding: var(--e-3) 0;
+  text-align: left;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--t-md);
+  font-weight: 700;
+  color: var(--verde);
+  border-bottom: 2px solid var(--linea);
+}
+.categoria-cabecera .cuenta {
+  font-family: system-ui, sans-serif;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--texto-suave);
+  margin-left: auto;
+}
+.categoria-cabecera .flecha {
+  transition: transform var(--dur-media) var(--curva);
+  color: var(--texto-suave);
+  flex: 0 0 auto;
+}
+.categoria-cabecera[aria-expanded="true"] .flecha { transform: rotate(180deg); }
+.categoria-cuerpo { padding: var(--e-2) 0 var(--e-3); }
+.categoria-cuerpo[hidden] { display: none; }
+.categoria-cuerpo.abriendo { animation: aparece var(--dur-media) var(--curva) both; }
+.categoria-nota {
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
+  font-style: italic;
+  margin-bottom: var(--e-2);
+}
+
+/* --- Tabla de horarios --- */
+.tabla-horario { width: 100%; border-collapse: collapse; }
+.tabla-horario caption {
+  text-align: left;
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
+  padding-bottom: var(--e-2);
+}
+.tabla-horario td {
+  padding: .6rem .3rem;
+  border-bottom: 1px solid var(--linea);
+  font-variant-numeric: tabular-nums;
+}
+.tabla-horario td:first-child { font-weight: 600; }
+.tabla-horario td:last-child { text-align: right; white-space: nowrap; }
+.tabla-horario tr[data-hoy="si"] td {
+  background: var(--superficie);
+  border-bottom-color: var(--verde);
+  box-shadow: inset 0 2px 0 var(--verde);
+}
+.etiqueta-hoy {
+  font-size: var(--t-xs);
+  font-weight: 700;
+  color: var(--surf-verde-txt);
+  background: var(--surf-verde);
+  border-radius: 999px;
+  padding: .05rem .45rem;
+  margin-left: .35rem;
+  white-space: nowrap;
+}
+
+/* --- Semana de bocadillos --- */
+.dia-boca { border-bottom: 1px solid var(--linea); padding: var(--e-3) 0; }
+.dia-boca:last-child { border-bottom: 0; }
+.dia-boca[data-hoy="si"] {
+  background: var(--superficie);
+  border-radius: var(--radio-sm);
+  padding-left: var(--e-3);
+  padding-right: var(--e-3);
+  border-bottom: 0;
+  outline: 2px solid var(--verde);
+  outline-offset: -2px;
+}
+.dia-boca .nombre-dia {
+  display: block;
+  font-size: var(--t-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--verde);
+}
+
+/* --- Pie --- */
+.pie {
+  background: var(--cabecera-bg);
+  color: var(--cabecera-txt);
+  padding: var(--e-5) var(--borde-vista);
+  padding-left: max(var(--borde-vista), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--borde-vista), env(safe-area-inset-right, 0px));
+}
+.pie-interior { max-width: 900px; margin: 0 auto; display: grid; gap: var(--e-4); }
+.pie h2 { font-size: var(--t-lg); margin-bottom: var(--e-2); }
+.pie a { color: var(--cabecera-txt); }
+.pie-enlaces { display: flex; flex-wrap: wrap; gap: var(--e-2); }
+.pie-boton {
+  display: inline-flex; align-items: center; gap: .4rem;
+  min-height: 44px; padding: .5rem .9rem;
+  border: 1px solid currentColor; border-radius: var(--radio-sm);
+  text-decoration: none; font-size: var(--t-sm); font-weight: 600;
+  transition: transform var(--dur-corta) var(--curva);
+}
+.pie-boton:active { transform: scale(.97); }
+.pie-fino { font-size: var(--t-xs); opacity: .85; }
+
+/* --- Mensaje de error amable --- */
+.error-datos {
+  margin: var(--e-5) auto;
+  max-width: 34ch;
+  text-align: center;
+  padding: var(--e-5) var(--e-4);
+}
+.error-datos .icono { font-size: 2.5rem; }
+.error-datos h1 { font-size: var(--t-lg); margin: var(--e-3) 0 var(--e-2); }
+.error-datos p { color: var(--texto-suave); }
+
+/* ============ 8. ANIMACIONES ============================================= */
+@keyframes entra-vista {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes aparece {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pulso {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .45; transform: scale(.82); }
+}
+
+.revelar { opacity: 0; }
+.revelar.visible { animation: aparece var(--dur-larga) var(--curva) both; }
+
+.pulsable { transition: transform var(--dur-corta) var(--curva); }
+.pulsable:active { transform: scale(.98); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .revelar { opacity: 1; }
+}
+
+/* ============ 9. PANTALLAS GRANDES ======================================= */
+/* Rejilla de dos columnas: una sola columna en móvil y dos cuando el
+   contenedor da de sí (sirve igual para un plegable abierto que para una
+   tablet). El hueco lo pone siempre el gap, nunca los márgenes de los hijos,
+   para que la separación sea la misma en los dos casos. */
+.rejilla-2 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-5);
+}
+.rejilla-2 > .tarjeta,
+.rejilla-2 > .bloque { margin: 0; }
+
+@container vista (min-width: 34rem) {
+  .rejilla-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-5) var(--e-4);
+    align-items: start;
+  }
+}
+
+/* A partir de 900 px la navegación sube arriba */
+@media (min-width: 900px) {
+  body { padding-bottom: 0; }
+  .cabecera {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "marca estado botones";
+    gap: var(--e-3);
+    min-height: var(--alto-cabecera);
+  }
+  .nav-principal {
+    position: sticky;
+    top: calc(var(--alto-cabecera) + env(safe-area-inset-top, 0px));
+    bottom: auto;
+    border-top: 0;
+    border-bottom: 1px solid var(--linea);
+    justify-content: center;
+    gap: var(--e-2);
+    padding: var(--e-2) var(--borde-vista);
+  }
+  .nav-principal .pestana {
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: .45rem;
+    padding: .5rem 1rem;
+    border-radius: 999px;
+    font-size: var(--t-sm);
+  }
+  .nav-principal .pestana[aria-selected="true"] { background: var(--superficie); }
+  .nav-principal .pestana::after { display: none; }
+  .categoria { scroll-margin-top: calc(var(--alto-cabecera) + var(--alto-barra) + 64px); }
+  .pie-interior { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ============ 10. PLEGABLES (Viewport Segments API) ======================= */
+/* Mejora progresiva: si el navegador informa de la bisagra, el contenido no se
+   coloca encima. Sin soporte, todo funciona exactamente igual. */
+@media (horizontal-viewport-segments: 2) {
+  :root {
+    --bisagra: calc(env(viewport-segment-left 1 0, 0px) - env(viewport-segment-right 0 0, 0px));
+  }
+  .vista { max-width: none; }
+  .rejilla-2 {
+    display: grid;
+    grid-template-columns:
+      env(viewport-segment-width 0 0, 1fr)
+      env(viewport-segment-width 1 0, 1fr);
+    gap: var(--e-5) var(--bisagra);
+  }
+  /* El contenido de una sola columna se queda dentro del segmento izquierdo */
+  .una-columna { max-width: env(viewport-segment-width 0 0, 100%); }
+}
+
+@media (vertical-viewport-segments: 2) {
+  /* Plegado tipo libreta: dejamos respirar la zona de la bisagra */
+  .vista { padding-bottom: calc(var(--e-5) + var(--e-4)); }
+}

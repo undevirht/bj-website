@@ -1,0 +1,41 @@
+FOTOS DEL LOCAL
+===============
+
+Aquí van las fotos. Ahora mismo la carpeta está vacía a propósito: la web
+actual no tenía ninguna foto real, y no se ponen fotos de banco de imágenes
+que parezcan del bar.
+
+CÓMO AÑADIR UNA FOTO
+
+1. Guarda la foto aquí, por ejemplo  img/exterior.webp
+2. Abre  js/datos.js , busca  fotos: []  dentro de  local:
+3. Escríbela así:
+
+   fotos: [
+     { src: "img/exterior.webp", w: 800, h: 600,
+       alt: { es: "Fachada de Restaurant BJ", en: "Restaurant BJ from the street" } },
+     { src: "img/interior.webp", w: 800, h: 600,
+       alt: { es: "Interior del bar", en: "Inside the bar" } }
+   ]
+
+4. Guarda y recarga la web.
+
+RECOMENDACIONES
+
+- Formato WebP o AVIF (pesan la mitad que un JPG). Cualquier conversor online
+  gratuito sirve. Si solo tienes JPG, también funciona.
+- Ancho máximo 800 px. Una foto de móvil sin tocar pesa 4 MB y tarda mucho
+  con la wifi del bar.
+- Pon siempre  w:  y  h:  con el tamaño real, para que la página no dé saltos
+  mientras carga.
+- El texto  alt:  describe la foto para quien no puede verla. Es obligatorio
+  para la accesibilidad.
+
+FOTOS QUE HACEN FALTA
+
+[ ] Exterior o fachada
+[ ] Interior del bar
+[ ] Un plato del menú del día
+[ ] Un bocadillo
+[ ] Una foto de 1200 x 630 px para cuando se comparte el enlace por WhatsApp
+    (se configura en index.html, etiqueta og:image)
